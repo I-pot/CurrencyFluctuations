@@ -51,16 +51,73 @@ else:
     f.close()
 
 curVal = [float(i) for i in curVal]
-#print(y)
+lask = len(curVal)
+daysRange = np.arange(1,lask+1)
 
+forwDif = [j-i for i,j in zip(curVal[:-1:],curVal[1::])]
+backDif = [i-j for i,j in zip(curVal[1::],curVal[:-1:])] #The backward difference is essentially just shifted forward difference
+cenDif = [i-j for i,j in zip(curVal[2::],curVal[:-2:])]
+fbRat = []
+bfRat = []
+dRfbRat = []
+dRbfRat = [] 
+nlask = 0
+#Calculating fb, bf ratios
+for i in range(0,len(backDif)-1):
+    f = forwDif[i]
+    b = backDif[i+1]
+    if (b != 0):
+        fbRat.append(f/b)
+        dRfbRat.append(nlask)
+        nlask += 1
+    else:
+        fbRat.append(0)
+        dRfbRat.append(nlask)
+        nlask += 1
+    if(f != 0):
+        bfRat.append(b/f)
+    else:
+        bfRat.append(0)
+
+cbRat = []
+dRcbRat = []
+#Calculating cen/back ratio
+nlask = 0
+for i in range(0,len(cenDif)):
+    c = cenDif[i]
+    b = backDif[i]
+    if (b!=0):
+        cbRat.append(c/b)
+        dRcbRat.append(nlask)
+        nlask += 1
+
+
+#Print derivatives
+if(True):
+    #Forward, backward and central differences
+    fig1 = plt.figure(1)
+    plt.plot(daysRange[:-1:],forwDif,label="Forward Difference")
+    plt.plot(daysRange[1::],backDif,label="Backward Difference")
+    plt.plot(daysRange[1:-1:],cenDif,label="Central Difference")
+    plt.legend()
+    
+    fig2 = plt.figure(2)
+    plt.plot(dRfbRat,fbRat,label="Forw/Back Difference")
+    #plt.plot(dRfbRat,fbRat,label="|Forw/Back Difference|")
+    plt.plot(dRfbRat,bfRat,label="Back/Forw Difference")
+    plt.plot(dRcbRat,cbRat,label="Cen/Back Difference")
+    
+    #plt.xscale("log")
+
+    plt.legend()
+    plt.show()
 
 #Do you wanna see some plots?
 if(False):
-    lask = len(curVal)
+    
     fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(20,40))
     plt.subplots_adjust(left=0.05, bottom=0.08, right=0.995, top=0.965, wspace=0.177, hspace=0.225)
     ax1.set_title('Value of Eur in Sek')
-    daysRange = np.arange(1,lask+1)
     #print(type(curVal[0]))
     ax1.plot(daysRange,curVal)
     ax1.set_xlabel("Days since 04.09.1999")

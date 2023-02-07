@@ -1,0 +1,24 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{What I've learned}
+\author{Topi Löytäinen}
+\date{}
+
+\begin{document}
+\maketitle
+
+I will document here stuff that I learn whilst I am implementing my own neural network. The output $\hat{y}$ of a simple 2-layer neural network is
+\begin{equation}
+\hat{y} = \sigma (W_2 \sigma (W_1 x + b_1) + b_2),
+\end{equation}
+where $x$ is the input layer, $W_1 (W_2)$ is the weight of the first (second) layer, $b_1 (b_2)$ is the bias of the first (second) layer and $\sigma$ is the activation function for hidden layer. When we are talking about the layers of a neural network we have the input layer, an arbitrary number of hidden layers and the output layer. The depth of the neural network i.e. how many layers it has is calculated by the amount of weights needed for the operation.
+
+I didn't know before that the output layer $\hat{y}$ is just the output of the activation function $\sigma$. Calculating $\hat{y}$ is known as feedforward and updating the weights and biases is known as backpropagation.
+
+
+
+\end{document}
+
