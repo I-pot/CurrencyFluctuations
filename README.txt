@@ -7,4 +7,5 @@ The directory contains my freetime projects that I was interested in at some poi
     - Simple implementation of a Neural Network. Mostly out of academic curiosity
 ./ScrapingInternet
     - Simple script to scrape the time and date website for lengths of days
-
+./DiffEqs
+    - Wanting to study the Black-Scholes model
