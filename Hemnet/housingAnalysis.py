@@ -126,7 +126,7 @@ def getHemnetSlutpris_Change(nettisivu,Fnimi):
         indeksi += 1
 
 
-#Get mathces from Hemnet website
+#Get sample mathces from Hemnet website
 if(False):
     url = 'https://www.hemnet.se/salda/bostader?location_ids%5B%5D=925968'
     
@@ -134,12 +134,89 @@ if(False):
     #getHemnetPriceChange(url,"KungsholmenChange.dat")
     getHemnetSlutpris_Change(url,"Kungsholmen.dat")
     
-#Analyse the acquired data
-if(True):
+#Analyse the sample data
+if(False):
     data = np.genfromtxt("Kungsholmen.dat")
     avgChange = np.nanmean(data[::,1])
     #for i in data[::,1]:
     print(avgChange)
     
     #These two do not agree with each other. Need to match those that I have
+
+
+#Get all matches from Hemnet website
+if(False):
+    url = 'https://www.hemnet.se/salda/bostader?location_ids%5B%5D=925968&page='
+    #https://www.hemnet.se/salda/bostader?location_ids%5B%5D=925968&page=1
+
+    for i in range(1,51,1):
+        getHemnetSlutpris_Change(url+str(i),"AllKungsholmen/Kungsholmen"+str(i)+".dat")
+    
+
+#Analyse the acquired data
+if(True):
+    tiedlkm = 50
+    data = [0] * tiedlkm
+    avgChange = [0] * tiedlkm
+    for i in range(0,tiedlkm,1):
+        if (i<9):
+            data[i] = np.genfromtxt("AllKungsholmen/Kungsholmen0"+str(i+1)+".dat")
+        else:
+            data[i] = np.genfromtxt("AllKungsholmen/Kungsholmen"+str(i+1)+".dat")
+
+    #for i in range(0,tiedlkm,1)
+    #    avgChange = np.nanmean(data[i][::,1])
+    #print(len(data[50]))
+    #avgChange = np.nanmean(data[::,1])
+    #for i in data[::,1]:
+    #print(avgChange)
+    
+    fig, ax1 = plt.subplots(1, 1, figsize=(13.2, 7.05) )#figsize=(10, 4), sharey = 'row'
+    plt.subplots_adjust(left=0.09, bottom=0.12, right=0.99, top=0.99, wspace = 0.188, hspace = 0.218)
+
+    fs = 30
+    akselit = [ax1]
+    for aks in akselit:
+      aks.tick_params(which='minor',length=4)
+      aks.xaxis.set_tick_params(which='both', labelbottom=True)
+      aks.set_xlabel('Percentage change',fontsize=fs)
+      aks.set_ylabel('Counts',fontsize=fs)
+      for axis in ['top','bottom','left','right']:
+        aks.spines[axis].set_linewidth(2)
+
+    #Show one by one
+    if(False):
+        for i in range(0,tiedlkm,1):
+           plt.title("Datafile = ",str(i))
+           plt.hist(data[i][::,1],bins=np.arange(-30,31))
+           plt.show()
+
+    #Show all layed over each other at once
+    if(False):
+        for i in range(0,tiedlkm,1):
+           plt.hist(data[i][::,1],bins=np.arange(-30,31))
+
+        plt.show()
+
+    if(False):
+        allChanges = []
+        for i in range(0,tiedlkm,1):
+            for k in range(0,tiedlkm,1):
+                allChanges.append(data[i][k][1])
+        print(allChanges)
+        for i in range(0,tiedlkm,1):
+            plt.hist(allChanges,bins=np.arange(-25,51))
+
+        plt.show()
+
+    if(True):
+        array = np.array(data)
+        #print(array.T)
+        counts, bins = np.histogram(array.T)
+        plt.stairs(counts, bins)            
+
+    #for city in CitiesAndCoord:
+    #  ax1.plot(city[1], getAvgDayInHours(city[0]), marker='x',  linestyle='None', mew=3, ms='12', label=str(city[0]))
+
+    plt.legend()
 

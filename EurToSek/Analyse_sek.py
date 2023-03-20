@@ -93,7 +93,7 @@ for i in range(0,len(cenDif)):
 
 
 #Print derivatives
-if(True):
+if(False):
     #Forward, backward and central differences
     fig1 = plt.figure(1)
     plt.plot(daysRange[:-1:],forwDif,label="Forward Difference")
@@ -113,7 +113,7 @@ if(True):
     plt.show()
 
 #Do you wanna see some plots?
-if(False):
+if(True):
     
     fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(20,40))
     plt.subplots_adjust(left=0.05, bottom=0.08, right=0.995, top=0.965, wspace=0.177, hspace=0.225)
