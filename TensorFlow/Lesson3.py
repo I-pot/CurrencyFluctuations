@@ -146,8 +146,8 @@ if(False):
     #plt.axis('off')
     plt.show()  
 
-#Testing 7x7 filters
-if(True):
+#Testing 7x7 filters 
+if(False):
 
     def apply7x7Filter(i_orig,i_transformed, filter, weight, size_x, size_y):
         """Applies the defined filter
@@ -179,15 +179,15 @@ if(True):
     size_x = i_trans1.shape[0]
     size_y = i_trans1.shape[1]
 
-    filter1 = [ [-1, -3, -4, -4, -4, -3, -1],
+    filter7x7 = [ [-1, -3, -4, -4, -4, -3, -1],
                 [-1, -3, -4, -4, -4, -3, -1],
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0],
                 [1, 3, 4, 4, 4, 3, 1],
                 [1, 3, 4, 4, 4, 3, 1]]
-
-    apply7x7Filter(i,i_trans1,filter1,1,size_x,size_y)
+    
+    apply7x7Filter(i,i_trans1,filter7x7,1,size_x,size_y)
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.2, 7.05) )
     plt.gray()
@@ -197,5 +197,103 @@ if(True):
     #plt.axis('off')
     plt.show()  
 
+#Defining a general apply filter fuction
+def applyFilter(i_orig,i_transformed, filter, weight, size_x, size_y):
+    """Applies the defined filter
+
+    :param i_orig: The original np.array
+    :param i_transformed: the np.array that we want to be transformed
+    :param filter: the filter which we want to apply (nxn matrix where n is odd)
+    :param weight: If digits in filter not 1 or 0, add a weight
+    :param size_x: Size of the x-axis
+    :param size_y: Size of the y-axis
+    """
+    offset = int((len(filter[0])-1)/2)
+    for x in range(offset,size_x-offset):
+      for y in range(offset,size_y-offset):
+          output_pixel = 0.0
+          for m in range(-offset,offset+1):
+            for k in range(-offset,offset+1):
+                output_pixel = output_pixel + (i_orig[x + k, y+m] * filter[offset+m][offset+k])#note k and m
+          output_pixel = output_pixel * weight
+          if(output_pixel<0):
+            output_pixel=0
+          if(output_pixel>255):
+            output_pixel=255
+          i_transformed[x, y] = output_pixel
+
+
+#Testing generalization of applyFilter function
+if(True):
+
+    i_trans3x3 = np.copy(i)
+    size_x = i_trans3x3.shape[0]
+    size_y = i_trans3x3.shape[1]
+
+    filter3x3 = [[-1,-2,-1],
+                 [0,0,0],
+                 [1,2,1]]
+
+    applyFilter(i,i_trans3x3,filter3x3,1,size_x,size_y)
+
+    i_trans5x5 = np.copy(i)
+
+    filter5x5 = [[-1,-3,-4,-3,-1],
+                 [-1,-3,-4,-3,-1],
+                 [0,0,0,0,0],
+                 [1,3,4,3,1],
+                 [1,3,4,3,1]]
+
+    applyFilter(i,i_trans5x5,filter5x5,1,size_x,size_y)
+
+    i_trans7x7 = np.copy(i)
+
+    filter7x7 = [ [-1, -3, -4, -4, -4, -3, -1],
+                [-1, -3, -4, -4, -4, -3, -1],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [1, 3, 4, 4, 4, 3, 1],
+                [1, 3, 4, 4, 4, 3, 1]]
+
+    applyFilter(i,i_trans7x7,filter7x7,1,size_x,size_y)
+
+    fig, ((ax1, ax2),(ax3,ax4)) = plt.subplots(2, 2, figsize=(13.2, 7.05) )
+    plt.gray()
+    plt.grid(False)
+    ax1.set_title("Original")
+    ax1.imshow(i)#Original
+    ax2.set_title("3x3 Filter")
+    ax2.imshow(i_trans3x3)
+    ax3.set_title("5x5 Filter")
+    ax3.imshow(i_trans5x5)
+    ax4.set_title("7x7 Filter")
+    ax4.imshow(i_trans5x5)
+
+    #plt.axis('off')
+    plt.show()  
+
+#A pooling function
+if(False):
+    new_x = int(size_x/2)
+    new_y = int(size_y/2)
+    newImage = np.zeros((new_x, new_y))
+    for x in range(0, size_x, 2):
+      for y in range(0, size_y, 2):
+        pixels = []
+        pixels.append(i_transformed[x, y])
+        pixels.append(i_transformed[x+1, y])
+        pixels.append(i_transformed[x, y+1])
+        pixels.append(i_transformed[x+1, y+1])
+        pixels.sort(reverse=True)
+        newImage[int(x/2),int(y/2)] = pixels[0]
+    
+    # Plot the image. Note the size of the axes -- now 256 pixels instead of 512
+    plt.gray()
+    plt.grid(False)
+    plt.imshow(newImage)
+    #plt.axis('off')
+    plt.show()   
+   
 
 

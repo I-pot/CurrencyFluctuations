@@ -7,6 +7,10 @@ The directory contains my freetime projects that I was interested in at some poi
     - Some simple analysis on how te exchange rate between euro and sek has changed over the years.
 ./Hemnet
     - Analysis on data scraped from the Hemnet website. How much does the price of an apartment increase during sales?
+./Misc
+    - Collection of miscellanous python files.
+    - square.py: Why is the uniform distribution like that?
+    - AnimatedHistogram.py: An example of an animated histogram. Useful?
 ./NeuralNetwork
     - Simple implementation of a Neural Network. Mostly out of academic curiosity.
 ./ScrapingInternet
