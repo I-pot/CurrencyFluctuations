@@ -1,6 +1,10 @@
-The directory contains my freetime projects that I was interested in at some point. A bit of this and a bit of that.
+The directory contains my freetime projects that I am interested in. A bit of this and a bit of that.
 
 =========================================
+.gitignore
+    - Neural network rps.h5 model for rock-paper-scissors game is ignored. Large file. Generate with the file on your local machine
+./CompanyHealth
+    - Looking into clustering algorithms to predict company health
 ./DiffEqs
     - Wanting to study the Black-Scholes model
 ./EurToSek
