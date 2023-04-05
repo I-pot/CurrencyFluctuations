@@ -69,5 +69,5 @@ def emergingMarketZ(x1, x2, x3, x4):
 #https://en.wikipedia.org/wiki/Ohlson_O-score
 
 #Cluster companies in terms of Z-score and what? Stock price? Need to do this as a function of time?
-#Company size?
+#Company size? Average price of the product they are selling
 
